@@ -54,4 +54,9 @@ We can see important improvement between 1 and 8 workers. But over that, more wo
 
 ![image](perf.png)
 
-This may be caused by sample collected faster than the learner can process them, creating a bottleneck. Also, because the batch size is fixed, a too important amount of workers result in smaller fragements,  which increases synchronization overhead relatively to useful work.
+We observe a significant improvement in performance when increasing the number of workers from 1 to 8. Beyond that, adding more workers produces roughly the same performance.
+This behavior is likely due to two factors:
+- Learner bottleneck: samples are collected faster than the learner can process them.
+- Synchronization overhead: with a fixed batch size, too many workers produce smaller fragments of data, which increases synchronization costs relative to useful computation.
+
+With a larger neural network and larger batch size, adding more workers may have a more noticeable effect on performance.
