@@ -5,7 +5,6 @@ import time
 
 import gymnasium as gym
 import numpy as np
-import torch
 import ray
 from ray import tune
 from ray.rllib.algorithms.ppo import PPOConfig

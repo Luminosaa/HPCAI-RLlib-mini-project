@@ -27,7 +27,6 @@ config = (
     PPOConfig()
     .environment(env="frostbite")
     .framework("torch")
-    # IMPORTANT: No rollout workers during inference
     .env_runners(num_env_runners=0)
     .rl_module(model_config={"vf_share_layers": True})
 )
@@ -57,13 +56,11 @@ print("Starting visualization...")
 
 try:
     while not done:
-        # [1, 84, 84, 4] float32 tensor
         obs_batch = torch.from_numpy(np.expand_dims(obs, axis=0)).float()
 
         with torch.no_grad():
             output = rl_module.forward_inference({"obs": obs_batch})
 
-        # Greedy action
         logits = output["action_dist_inputs"]
         action = torch.argmax(logits, dim=1).item()
 
